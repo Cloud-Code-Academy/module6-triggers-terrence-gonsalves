@@ -1,42 +1,29 @@
-trigger AccountTrigger on Account (before insert) {
-    if (trigger.isInsert) {
-        for (Account a : trigger.new) {
-            
-            /*Question #1*/
+trigger AccountTrigger on Account (before insert, after insert) {
+    AccountTriggerHandler handler = new AccountTriggerHandler(trigger.isExecuting, trigger.size);
 
-            // check if Type is empty
-            if (a.Type == '' || a.Type == null) {
-                a.Type = 'Prospect';
-            }
+    switch on trigger.operationType {
+        when BEFORE_INSERT {
+            handler.beforeInsert(trigger.new);
+        }
 
-            /*Questions #2*/
+        when BEFORE_UPDATE {
+            handler.beforeUpdate(trigger.old, trigger.new, trigger.oldMap, trigger.newMap);
+        }
 
-            // copy shipping to billing address checking fields are not empty
-            if (!String.isBlank(a.ShippingStreet)) {
-                a.BillingStreet = a.ShippingStreet;
-            }
+        when AFTER_UPDATE {
+            handler.afterUpdate(trigger.old, trigger.new, trigger.oldMap, trigger.newMap);
+        }
 
-            if (!String.isBlank(a.ShippingCity)) {
-                a.BillingCity = a.ShippingCity;
-            }
+        when AFTER_INSERT {
+            handler.afterInsert(trigger.new, trigger.newMap);
+        }
 
-            if (!String.isBlank(a.ShippingPostalCode)) {
-                a.BillingPostalCode = a.ShippingPostalCode;
-            }
+        when AFTER_DELETE {
+            handler.afterDelete(trigger.old, trigger.oldMap);
+        }
 
-            if (!String.isBlank(a.ShippingState)) {
-                a.BillingState = a.ShippingState;
-            }
-
-            if (!String.isBlank(a.ShippingCountry)) {
-                a.BillingCountry = a.ShippingCountry;
-            }
-
-            /*Questions #3*/
-
-            if (!String.isBlank(a.Phone) && !String.isBlank(a.Fax) && !String.isBlank(a.Website)) {
-                a.Rating = 'Hot';
-            }
+        when AFTER_UNDELETE {
+            handler.afterUndelete(trigger.new, trigger.newMap);
         }
     }
 }
