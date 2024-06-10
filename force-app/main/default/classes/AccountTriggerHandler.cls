@@ -15,27 +15,27 @@ public without sharing class AccountTriggerHandler {
     private void switchOnType(String operationType) {
         switch on trigger.operationType {
             when BEFORE_INSERT {
-                handler.beforeInsert(trigger.new);
+                beforeInsert(trigger.new);
             }
     
             when BEFORE_UPDATE {
-                handler.beforeUpdate(trigger.old, trigger.new, trigger.oldMap, trigger.newMap);
+                beforeUpdate(trigger.old, trigger.new, trigger.oldMap, trigger.newMap);
             }
     
             when AFTER_UPDATE {
-                handler.afterUpdate(trigger.old, trigger.new, trigger.oldMap, trigger.newMap);
+                afterUpdate(trigger.old, trigger.new, trigger.oldMap, trigger.newMap);
             }
     
             when AFTER_INSERT {
-                handler.afterInsert(trigger.new, trigger.newMap);
+                afterInsert(trigger.new, trigger.newMap);
             }
     
             when AFTER_DELETE {
-                handler.afterDelete(trigger.old, trigger.oldMap);
+                afterDelete(trigger.old, trigger.oldMap);
             }
     
             when AFTER_UNDELETE {
-                handler.afterUndelete(trigger.new, trigger.newMap);
+                afterUndelete(trigger.new, trigger.newMap);
             }
         }
     }
