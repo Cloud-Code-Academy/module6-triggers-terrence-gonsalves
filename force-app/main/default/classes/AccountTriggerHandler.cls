@@ -1,12 +1,45 @@
 public without sharing class AccountTriggerHandler {
     private Boolean triggerIsExecuting;
     private Integer triggerSize;
-    //private Enum operationType {BEFORE_INSERT, BEFORE_UPDATE, AFTER_UPDATE, AFTER_INSERT, AFTER_DELETE, AFTER_UNDELETE};
+    //private String operationType;
 
     public AccountTriggerHandler(Boolean triggerIsExecuting, Integer triggerSize) {
         this.triggerIsExecuting = triggerIsExecuting;
+        this.triggerSize = triggerSize;
         //this.operationType = operationType;
+
+        //this.switchOnType(this.operationType);
     }
+
+    /*
+    private void switchOnType(String operationType) {
+        switch on trigger.operationType {
+            when BEFORE_INSERT {
+                handler.beforeInsert(trigger.new);
+            }
+    
+            when BEFORE_UPDATE {
+                handler.beforeUpdate(trigger.old, trigger.new, trigger.oldMap, trigger.newMap);
+            }
+    
+            when AFTER_UPDATE {
+                handler.afterUpdate(trigger.old, trigger.new, trigger.oldMap, trigger.newMap);
+            }
+    
+            when AFTER_INSERT {
+                handler.afterInsert(trigger.new, trigger.newMap);
+            }
+    
+            when AFTER_DELETE {
+                handler.afterDelete(trigger.old, trigger.oldMap);
+            }
+    
+            when AFTER_UNDELETE {
+                handler.afterUndelete(trigger.new, trigger.newMap);
+            }
+        }
+    }
+    */
 
     /*Before Insert*/
     public void beforeInsert(List<Account> newAccounts) {
@@ -50,23 +83,11 @@ public without sharing class AccountTriggerHandler {
         }
     }
 
-    /*Before Update*/
-    public void beforeUpdate(List<Account> oldAccounts, List<Account> newAccounts, Map<ID, SObject> oldAccountMap, Map<ID, SObject> newAccountMap) {
-        // helper.doTask3();
-        // helper.doTask4();
-    }
-
-    /*Before Delete*/
-    public void beforeDelete(List<Account> oldAccounts, Map<ID, SObject> oldAccountMap) {
-        // helper.doTask5();
-        // helper.doTask1();
-    }
-
     /*After Insert*/
     public void afterInsert(List<Account> newAccounts, Map<ID, SObject> newAccountMap) {
 
         /*Question #4*/
-        
+
         List<Contact> contactObjects = new List<Contact>();
 
         for (Account a : newAccounts) {
@@ -75,23 +96,5 @@ public without sharing class AccountTriggerHandler {
         }
 
         insert contactObjects;
-    }
-
-    /*After Update*/
-    public void afterUpdate(List<Account> oldAccounts, List<Account> newAccounts, Map<ID, SObject> oldAccountMap, Map<ID, SObject> newAccountMap) {
-        // helper.doTask4();
-        // helper.doTask5();
-    }
-
-    /*After Delete*/
-    public void afterDelete(List<Account> oldAccounts, Map<ID, SObject> oldAccountMap) {
-        // helper.doTask3();
-        // helper.doTask1();
-    }
-
-    /*After Undelete*/
-    public void afterUndelete(List<Account> newAccounts, Map<ID, SObject> newAccountMap) {
-        // helper.doTask4();
-        // helper.doTask2();
     }
 }
