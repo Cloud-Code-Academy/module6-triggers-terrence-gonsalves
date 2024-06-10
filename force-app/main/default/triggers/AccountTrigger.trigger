@@ -31,6 +31,12 @@ trigger AccountTrigger on Account (before insert) {
             if (!String.isBlank(a.ShippingCountry)) {
                 a.BillingCountry = a.ShippingCountry;
             }
+
+            /*Questions #3*/
+
+            if (!String.isBlank(a.Phone) && !String.isBlank(a.Fax) && !String.isBlank(a.Website)) {
+                a.Rating = 'Hot';
+            }
         }
     }
 }
