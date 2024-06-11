@@ -14,4 +14,14 @@ public with sharing class OpportunityTriggerHandler {
             }
         }
     }
+
+    public void beforeDelete(List<Account> oldAccounts, Map<ID, SObject> oldAccountMap) {
+        Account bankingAccts = [select Id from Account where Industry = 'Banking'];
+
+        /*for (Opportunity o : oldAccounts) {
+            if (o.AccountId == bankingAccts.Id && o.StageName == 'Closed Won') {
+                o.addError('Cannot delete closed opportunity for a banking account that is won');
+            }
+        }*/
+    }
 }

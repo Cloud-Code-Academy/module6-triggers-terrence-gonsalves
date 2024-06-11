@@ -5,6 +5,15 @@
 // You can also execute the entire file by running the command:
 //     SFDX: Execute Anonymous Apex with Editor Contents
 
-string tempvar = 'Enter_your_name_here';
-System.debug('Hello World!');
-System.debug('My name is ' + tempvar);
+Account bankingAccts = [select Id from Account where Industry = 'Banking'];
+List<Opportunity> bankingOpps = [select Id, Name, StageName from Opportunity where AccountId = :bankingAccts.Id];
+
+List<Opportunity> closedWonOppsOnly = new List<Opportunity>();
+
+for (Opportunity o : bankingOpps) {
+    if (o.StageName == 'Closed Won') {
+        closedWonOppsOnly.add(o);
+    }
+}
+
+System.debug(closedWonOppsOnly);
