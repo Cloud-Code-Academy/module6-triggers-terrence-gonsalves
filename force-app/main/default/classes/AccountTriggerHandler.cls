@@ -1,46 +1,32 @@
-public without sharing class AccountTriggerHandler {
-    private Boolean triggerIsExecuting;
-    private Integer triggerSize;
-    //private String operationType;
+/**
+  * I did not like how I set up my Triggers so I looked into Trigger Framework and came across the SFDC trigger framework.
+  * Reading over the 'Trigger Framework in Salesforce' article I implemented the SFDC trigger framework class to remove all
+  * the code from my trigger and into a trigger handler.
+  *
+  * I have not fully looked over all the code within that class but will be doing so over the period of this course and beyond to ensure I fully
+  * understand the framework.
+  *
+  * RESOURCES: 
+  * - Trigger Framework in Salesforce: https://www.apexhours.com/trigger-framework-in-salesforce/
+  * - SFDC Trigger Framework: https://github.com/kevinohara80/sfdc-trigger-framework/tree/master
+  *
+  * author: Terrence Gonsalves
+  */
+public with sharing class AccountTriggerHandler extends TriggerHandler {
+    private List<Account> newAcct;
+    private List<Account> oldAcct;
+    private Map<Id, Account> newAcctMap;
+    private Map<Id, Account> oldAcctMap;
 
-    public AccountTriggerHandler(Boolean triggerIsExecuting, Integer triggerSize) {
-        this.triggerIsExecuting = triggerIsExecuting;
-        this.triggerSize = triggerSize;
+    public AccountTriggerHandler() {
+        this.oldAcct = (List<Account>) Trigger.old;
+        this.newAcct = (List<Account>) Trigger.new;
+        this.newAcctMap = (Map<Id, Account>) Trigger.newMap;
+        this.oldAcctMap = (Map<Id, Account>) Trigger.oldMap;
     }
 
-    /*
-    private void switchOnType(String operationType) {
-        switch on trigger.operationType {
-            when BEFORE_INSERT {
-                beforeInsert(trigger.new);
-            }
-    
-            when BEFORE_UPDATE {
-                beforeUpdate(trigger.old, trigger.new, trigger.oldMap, trigger.newMap);
-            }
-    
-            when AFTER_UPDATE {
-                afterUpdate(trigger.old, trigger.new, trigger.oldMap, trigger.newMap);
-            }
-    
-            when AFTER_INSERT {
-                afterInsert(trigger.new, trigger.newMap);
-            }
-    
-            when AFTER_DELETE {
-                afterDelete(trigger.old, trigger.oldMap);
-            }
-    
-            when AFTER_UNDELETE {
-                afterUndelete(trigger.new, trigger.newMap);
-            }
-        }
-    }
-    */
-
-    /*Before Insert*/
-    public void beforeInsert(List<Account> newAccounts) {
-        for (Account a : newAccounts) {
+    public override void beforeInsert() {
+        for (Account a : newAcct) {
             
             /*Question #1*/
 
@@ -80,14 +66,13 @@ public without sharing class AccountTriggerHandler {
         }
     }
 
-    /*After Insert*/
-    public void afterInsert(List<Account> newAccounts, Map<ID, SObject> newAccountMap) {
+    public override void afterInsert() {
 
         /*Question #4*/
 
         List<Contact> contactObjects = new List<Contact>();
 
-        for (Account a : newAccounts) {
+        for (Account a : newAcct) {
             Contact con = new Contact(LastName = 'DefaultContact', Email = 'default@email.com', AccountId = a.Id);
             contactObjects.add(con);
         }
