@@ -6,9 +6,6 @@ public without sharing class AccountTriggerHandler {
     public AccountTriggerHandler(Boolean triggerIsExecuting, Integer triggerSize) {
         this.triggerIsExecuting = triggerIsExecuting;
         this.triggerSize = triggerSize;
-        //this.operationType = operationType;
-
-        //this.switchOnType(this.operationType);
     }
 
     /*
@@ -55,23 +52,23 @@ public without sharing class AccountTriggerHandler {
             /*Questions #2*/
 
             // copy shipping to billing address checking fields are not empty
-            if (!String.isBlank(a.ShippingStreet)) {
+            if (a.ShippingStreet == null || a.ShippingStreet == '') {
                 a.BillingStreet = a.ShippingStreet;
             }
 
-            if (!String.isBlank(a.ShippingCity)) {
+            if (a.ShippingCity == null || a.ShippingCity == '') {
                 a.BillingCity = a.ShippingCity;
             }
 
-            if (!String.isBlank(a.ShippingPostalCode)) {
+            if (a.ShippingPostalCode == null || a.ShippingPostalCode == '') {
                 a.BillingPostalCode = a.ShippingPostalCode;
             }
 
-            if (!String.isBlank(a.ShippingState)) {
+            if (a.ShippingState == null || a.ShippingState == '') {
                 a.BillingState = a.ShippingState;
             }
 
-            if (!String.isBlank(a.ShippingCountry)) {
+            if (a.ShippingCountry == null || a.ShippingCountry == '') {
                 a.BillingCountry = a.ShippingCountry;
             }
 
