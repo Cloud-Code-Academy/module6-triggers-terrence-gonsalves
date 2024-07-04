@@ -38,23 +38,23 @@ public with sharing class AccountTriggerHandler extends TriggerHandler {
             /*Questions #2*/
 
             // copy shipping to billing address checking fields are not empty
-            if (a.ShippingStreet == null || a.ShippingStreet == '') {
+            if (a.ShippingStreet != null || a.ShippingStreet != '') {
                 a.BillingStreet = a.ShippingStreet;
             }
 
-            if (a.ShippingCity == null || a.ShippingCity == '') {
+            if (a.ShippingCity != null || a.ShippingCity != '') {
                 a.BillingCity = a.ShippingCity;
             }
 
-            if (a.ShippingPostalCode == null || a.ShippingPostalCode == '') {
+            if (a.ShippingPostalCode != null || a.ShippingPostalCode != '') {
                 a.BillingPostalCode = a.ShippingPostalCode;
             }
 
-            if (a.ShippingState == null || a.ShippingState == '') {
+            if (a.ShippingState != null || a.ShippingState != '') {
                 a.BillingState = a.ShippingState;
             }
 
-            if (a.ShippingCountry == null || a.ShippingCountry == '') {
+            if (a.ShippingCountry != null || a.ShippingCountry != '') {
                 a.BillingCountry = a.ShippingCountry;
             }
 
